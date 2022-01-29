@@ -1,14 +1,14 @@
 Basic OPENGL + GLAD skeleton. Makes a window and colors it. Add glad, glfw, and glm folders with their stuff into the /lib folder.
 
-** Glad Download
+## Glad Download
 
 https://glad.dav1d.de/
 
-** GLFW Downlaod
+## GLFW Downlaod
 
 https://github.com/glfw/glfw
 
-** GLM Download
+## GLM Download
 
 https://github.com/g-truc/glm
 
