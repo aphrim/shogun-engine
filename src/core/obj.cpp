@@ -33,7 +33,6 @@ std::vector<float> OBJParser::parseObj(const char* objPath) {
     try {
         std::ifstream objFile; 
         objFile.open(objPath);
-        std::stringstream objDataStream;
 
         objData << objFile.rdbuf();
         objFile.close();

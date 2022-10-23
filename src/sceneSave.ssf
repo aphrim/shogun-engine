@@ -1,0 +1,22 @@
+Mesh
+
+Position 0 0 0
+Rotation 0 0 0
+Scale 2 2 2
+
+Texture textures/proto.png
+Model models/cube.obj
+Shader shaders/3dtextureshader.vert shaders/3dtextureshader.frag
+Color 0.5 0.5 0.5
+;
+
+Mesh
+
+Position 0 5 0
+Rotation 0 90 0
+Scale 0.01 0.01 0.01
+
+Model models/teapot.obj
+Shader shaders/3dshader.vert shaders/3dshader.frag
+Color 1 0 0
+;
