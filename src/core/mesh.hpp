@@ -15,6 +15,9 @@ public:
 
     Shader* shader;
     Texture* texture = nullptr;
+
+    void setColor(Vector3 c);
+    Vector3 getColor();
 private:
     void calcTransformMatrix();
 
@@ -23,5 +26,6 @@ private:
 
     glm::mat4 transformMatrix;
 
+    Vector3 color;
 };
 }

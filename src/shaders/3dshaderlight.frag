@@ -1,8 +1,9 @@
-#version 330 core
+#version 410 core
 
 in vec3 FragPos;
 in vec2 TexCord;
 in vec3 Normal;
+in vec3 Color;
 out vec4 FragColor;
 
 struct PointLight {
@@ -26,7 +27,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 
 void main() {
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 base = vec3(0.8,0.2,0.2);
+    vec3 base = Color;
     vec3 light = vec3(0.1,0.1,0.1); 
     for (int i = 0; i < lightCount; i++) {
         light += CalcPointLight(pointLights[i], Normal, FragPos, viewDir);

@@ -59,6 +59,7 @@ void Mesh::render(Entity* c) {
     shader->setMat4("view", camera->viewMatrix);
     shader->setMat4("transform", transformMatrix);
     shader->setVec3("viewPos", camera->getWorldPosition());
+    shader->setVec3("color", color);
 
     camera->setShaderLights(shader);
     glDrawArrays(GL_TRIANGLES, 0, vertC / 5);
@@ -72,6 +73,14 @@ void Mesh::calcTransformMatrix() {
     transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.y), glm::vec3(0,1,0));
     transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.z), glm::vec3(0,0,1));
     transformMatrix = glm::scale(transformMatrix, worldScale.glm());
+}
+
+void Mesh::setColor(Vector3 c) {
+    color = c;
+}
+
+Vector3 Mesh::getColor() {
+    return color;
 }
 
 }
