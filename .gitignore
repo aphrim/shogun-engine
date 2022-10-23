@@ -1,0 +1,7 @@
+SHOGUN_EDITOR
+SHOGUN_PLAYER
+cmake_install.cmake
+CMakeFiles/
+CMakeCache.txt
+Makefile
+

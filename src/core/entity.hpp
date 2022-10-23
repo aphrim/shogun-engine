@@ -1,0 +1,44 @@
+#pragma once
+#include "include.hpp"
+#include "vector.hpp"
+
+namespace SHOGUN {
+
+class Entity {
+public:
+    void setPosition(Vector3 pos);
+    void setRotation(Vector3 rot);
+    void setScale(Vector3 s);
+    void setWorldPosition(Vector3 pos, bool fromParent);
+    void setWorldRotation(Vector3 rot, bool fromParent);
+    void setWorldScale(Vector3 s, bool fromParent);
+    Vector3 getPosition();
+    Vector3 getRotation();
+    Vector3 getScale();
+    Vector3 getWorldPosition();
+    Vector3 getWorldRotation();
+    Vector3 getWorldScale();
+
+    virtual void render(Entity* camera);
+
+    std::vector<Entity*> getChildren();
+    void addChild(Entity* child);
+
+protected:
+    void updateChildrenPosition();
+    void updateChildrenRotation();
+    void updateChildrenScale();
+
+    Entity* parent;
+    std::vector<Entity*> children;
+
+    Vector3 position;
+    Vector3 rotation;
+    Vector3 scale = Vector3(1);
+
+    Vector3 worldPosition;
+    Vector3 worldRotation;
+    Vector3 worldScale = Vector3(1);
+
+};
+}
