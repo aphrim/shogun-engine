@@ -51,8 +51,6 @@ public:
     Vector2 operator/(float f);
     void operator/=(float f);
 
-    friend std::ostream& operator<<(std::ostream& out, const Vector2& vec);
-
     static float dot(Vector2 v1, Vector2 v2);
     static float distance(Vector2 v1, Vector2 v2);
     static float manhattanDistance(Vector2 v1, Vector2 v2);
@@ -106,8 +104,6 @@ public:
     Vector3 operator/(float f);
     void operator/=(float f);
 
-    friend std::ostream& operator<<(std::ostream& out, const Vector3& vec);
-
     static float dot(Vector3 v1, Vector3 v2);
     static Vector3 cross(Vector3 v1, Vector3 v2);
     static float angle(Vector3 v1, Vector3 v2);
@@ -121,4 +117,15 @@ public:
     static Vector3 fromGLM(glm::vec3 vec);
 #endif
 };
+
+inline std::ostream& operator<<(std::ostream& out, const Vector3& vec) {
+    out << vec.x << " " << vec.y << " " << vec.z;
+    return out;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const Vector2& vec) {
+    out << vec.x << " " << vec.y;
+    return out;
+}
+
 } //End namespace AE

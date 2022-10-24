@@ -102,11 +102,6 @@ void Vector2::operator/=(float f) {
     (*this) *= ( 1 / f );
 }
 
-std::ostream& operator<<(std::ostream& out, const Vector2& vec) {
-    out << "Vector2(" << vec.x << "," << vec.y << ")";
-    return out;
-}
-
 float Vector2::dot(Vector2 v1, Vector2 v2) {
     return(v1.x * v2.x + v1.y * v2.y);
 }
@@ -243,10 +238,6 @@ void Vector3::operator/=(float f) {
     (*this) *= (1 / f);
 }
 
-std::ostream& operator<<(std::ostream& out, const Vector3& vec) {
-    out << "Vector3(" << vec.x << "," << vec.y << "," << vec.z << ")";
-    return out;
-}
 
 float Vector3::dot(Vector3 v1, Vector3 v2) {
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);

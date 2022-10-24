@@ -1,0 +1,23 @@
+Mesh 
+ 
+Position 0 0 0
+Rotation 0 0 0
+Scale 2 2 2
+Color 0.5 0.5 0.5
+Texture textures/proto.png
+Shader shaders/3dtextureshader.vert shaders/3dtextureshader.frag
+Model models/cube.obj
+Id 1
+Name My Cube;
+; 
+Mesh 
+ 
+Position 0 5 0
+Rotation 324 0 0
+Scale 0.01 0.01 0.01
+Color 1 0 0
+Shader shaders/3dshader.vert shaders/3dshader.frag
+Model models/teapot.obj
+Id 2
+Name Teapot Lol;
+; 

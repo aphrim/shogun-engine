@@ -4,7 +4,7 @@
 
 namespace SHOGUN {
 
-Texture::Texture(const char* path) {
+Texture::Texture(const char* path) : path(path) {
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);

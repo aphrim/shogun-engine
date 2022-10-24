@@ -9,6 +9,8 @@ public:
 
     unsigned int getId();
     void use();
+    
+    std::string path;
 private:
     unsigned int ID;
 };

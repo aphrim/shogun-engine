@@ -24,6 +24,8 @@ public:
     std::vector<Entity*> getChildren();
     void addChild(Entity* child);
 
+    std::string name;
+    std::string id;
 protected:
     void updateChildrenPosition();
     void updateChildrenRotation();

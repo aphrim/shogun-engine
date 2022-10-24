@@ -35,7 +35,7 @@ void Camera::setShaderLights(Shader* shader) {
     for (int i = 0; i < lights.size(); i++) {
         Light* light = lights[i];
         sprintf(buffer, "pointLights[%d].color", i);
-        shader->setVec3(buffer, light->color);
+        shader->setVec3(buffer, light->getColor());
         sprintf(buffer, "pointLights[%d].position", i);
         shader->setVec3(buffer, light->getWorldPosition());
         sprintf(buffer, "pointLights[%d].strength", i);

@@ -1,5 +1,8 @@
 Mesh
 
+Id 1
+Name My Cube;
+
 Position 0 0 0
 Rotation 0 0 0
 Scale 2 2 2
@@ -12,6 +15,9 @@ Color 0.5 0.5 0.5
 
 Mesh
 
+Id 2
+Name Teapot Lol;
+
 Position 0 5 0
 Rotation 0 90 0
 Scale 0.01 0.01 0.01
@@ -20,3 +26,4 @@ Model models/teapot.obj
 Shader shaders/3dshader.vert shaders/3dshader.frag
 Color 1 0 0
 ;
+

@@ -2,7 +2,9 @@
 #include "shader.hpp"
 
 namespace SHOGUN {
-Shader::Shader(const char* vertexPath, const char* fragmentPath) {
+Shader::Shader(const char* vertexPath, const char* fragmentPath) :
+    vertexPath(vertexPath), fragmentPath(fragmentPath) 
+{
     std::string vertexCode;
     std::string fragmentCode;
     std::ifstream vShaderFile;

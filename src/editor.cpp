@@ -64,7 +64,9 @@ int main() {
     fb->makeDefault();
 
     SSF ssf = SSF(scene);
-    ssf.loadFromFile("src/sceneSave.ssf");
+    ssf.loadFromFile("src/sceneSaveNew.ssf");
+
+    Entity* teapot = scene->getEntityById("2");
 
     int tick = 0;
     while (!window->shouldClose()) {
@@ -72,6 +74,8 @@ int main() {
         std::chrono::high_resolution_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
 
         loop();
+
+        teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
 
         glClear(GL_COLOR_BUFFER_BIT);
         camera->renderWidth = window->getWindowSize().x;
@@ -84,4 +88,6 @@ int main() {
         std::cout << "Fps:" << 1000 / dur.count() << std::endl;
         tick++;
     }
+
+    ssf.serializeScene("src/sceneSaveNew.ssf");
 }

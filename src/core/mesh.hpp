@@ -18,6 +18,8 @@ public:
 
     void setColor(Vector3 c);
     Vector3 getColor();
+
+    std::string modelPath;
 private:
     void calcTransformMatrix();
 
