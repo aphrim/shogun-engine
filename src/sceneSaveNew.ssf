@@ -13,7 +13,7 @@ Name My Cube;
 Mesh 
  
 Position 0 5 0
-Rotation 324 0 0
+Rotation 5104 0 0
 Scale 0.01 0.01 0.01
 Color 1 0 0
 Shader shaders/3dshader.vert shaders/3dshader.frag
