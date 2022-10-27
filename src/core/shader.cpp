@@ -71,6 +71,9 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) :
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
+
+    unsigned int uniformBlockIndex = glGetUniformBlockIndex(ID, "CameraMatrix");
+    glUniformBlockBinding(ID, uniformBlockIndex, 0);
       
     glDeleteShader(vertex);
     glDeleteShader(fragment);

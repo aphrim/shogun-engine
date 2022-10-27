@@ -19,11 +19,10 @@ public:
     void setColor(Vector3 c);
     Vector3 getColor();
 
-    std::string modelPath;
 private:
+    unsigned int VAO, VBO;
     void calcTransformMatrix();
 
-    unsigned int VAO, VBO;
     int vertC;
 
     glm::mat4 transformMatrix;

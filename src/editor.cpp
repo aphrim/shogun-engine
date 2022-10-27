@@ -11,6 +11,7 @@
 #include "core/aabb.hpp"
 #include "core/include.hpp"
 #include "core/ssf.hpp"
+#include "util/noise.hpp"
 
 using namespace SHOGUN;
 
@@ -64,9 +65,27 @@ int main() {
     fb->makeDefault();
 
     SSF ssf = SSF(scene);
-    ssf.loadFromFile("src/sceneSaveNew.ssf");
+    //ssf.loadFromFile("src/sceneSaveNew.ssf");
 
-    Entity* teapot = scene->getEntityById("2");
+    //Entity* teapot = scene->getEntityById("2");
+
+    PerlinNoise pn(true);
+    Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/3dtextureshader.frag");
+    Texture* texture = new Texture("textures/dirt.png");
+    std::vector<float> model = objParser.parseObj("models/cube-mapped.obj");
+    for (int x = 0; x < 57; x++) {
+        for (int y = 0; y < 57; y++) {
+            int h = pn.noise(x / 20.0, y / 20.0, 0) * 20;
+            for (int z = 0; z < 3; z++) {
+                Mesh* mesh = new Mesh(&(model[0]), model.size() * sizeof(float), shader, texture);
+                mesh->setPosition(Vector3(x, h - z, y));
+                mesh->id = std::to_string(x + y * x + 3);
+                mesh->name = "Cube lol";
+                mesh->setRotation(Vector3(270, 0, 0));
+                scene->addEntity(mesh);
+            }
+        }
+    }
 
     int tick = 0;
     while (!window->shouldClose()) {
@@ -75,7 +94,7 @@ int main() {
 
         loop();
 
-        teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
+        //teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
 
         glClear(GL_COLOR_BUFFER_BIT);
         camera->renderWidth = window->getWindowSize().x;
@@ -89,5 +108,5 @@ int main() {
         tick++;
     }
 
-    ssf.serializeScene("src/sceneSaveNew.ssf");
+    //ssf.serializeScene("src/sceneSaveNew.ssf");
 }

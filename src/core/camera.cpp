@@ -2,12 +2,21 @@
 
 namespace SHOGUN {
 
+Camera::Camera() {
+    glGenBuffers(1, &cameraUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4) * 2, NULL, GL_STATIC_DRAW);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    glBindBufferRange(GL_UNIFORM_BUFFER, 0, cameraUBO, 0, sizeof(glm::mat4) * 2);
+}
+
 void Camera::render(Camera* camera) {
 
 }
 
 void Camera::renderToFramebuffer(Framebuffer* target) {
     target->bind();    
+    boundVAO = -1, boundVBO = -1, boundShader = -1;
     std::vector<Entity*> entities = scene->getEntities();
 
     viewMatrix = glm::mat4(1.0f);
@@ -17,6 +26,11 @@ void Camera::renderToFramebuffer(Framebuffer* target) {
     viewMatrix = glm::translate(viewMatrix, worldPosition.glm());
 
     projectionMatrix = glm::perspective(glm::radians(fov), (float) renderWidth / renderHeight, 0.1f, 100.0f);
+
+    glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(viewMatrix));
+    glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(projectionMatrix));
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     for (Entity* e : entities) {
         renderEntity(e);

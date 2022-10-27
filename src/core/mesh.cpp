@@ -44,24 +44,26 @@ void Mesh::render(Entity* c) {
      
     Camera* camera = static_cast<Camera*>(c);
     
-    int curVAO, curVBO;
 
-    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &curVAO);
-    if (curVAO != VAO) 
+    if (camera->boundVAO != VAO) {
         glBindVertexArray(VAO);
+        camera->boundVAO = VAO;
+    }
 
-    glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &curVBO);
-    if (curVBO != VBO)
+    if (camera->boundVBO != VBO) {
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        camera->boundVBO = VBO;
+    }
 
-    shader->use();
-    shader->setMat4("projection", camera->projectionMatrix);
-    shader->setMat4("view", camera->viewMatrix);
+    if (camera->boundShader != shader->ID) {
+        shader->use();
+        camera->boundShader = shader->ID;
+    }
+
     shader->setMat4("transform", transformMatrix);
-    shader->setVec3("viewPos", camera->getWorldPosition());
     shader->setVec3("color", color);
 
-    camera->setShaderLights(shader);
+    //camera->setShaderLights(shader);
     glDrawArrays(GL_TRIANGLES, 0, vertC / 5);
 }
 
