@@ -31,7 +31,7 @@ protected:
     void updateChildrenRotation();
     void updateChildrenScale();
 
-    Entity* parent;
+    Entity* parent = nullptr;
     std::vector<Entity*> children;
 
     Vector3 position;

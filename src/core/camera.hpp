@@ -19,7 +19,7 @@ public:
     float fov = 70;
     int renderWidth = 800;
     int renderHeight = 600;
-    int boundVAO, boundVBO, boundShader;
+    int boundVAO, boundVBO, boundShader, boundTexture;
 
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;

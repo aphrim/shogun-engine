@@ -15,9 +15,9 @@ void Entity::addChild(Entity* entity) {
 
 void Entity::setPosition(Vector3 pos) {
     position = pos;
-    if (parent)
+    if (parent) {
         worldPosition = parent->getWorldPosition() + pos;
-    else worldPosition = pos;
+    } else worldPosition = pos;
     updateChildrenPosition();
 }
 

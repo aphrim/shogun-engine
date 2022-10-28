@@ -2,57 +2,33 @@
 
 namespace SHOGUN {
     
-Mesh::Mesh(float* vertV, int vertC, Shader* shader) : Entity(), shader(shader), vertC(vertC) {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertC, vertV, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) 0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6*sizeof(float)));
-    glEnableVertexAttribArray(2);
-
+Mesh::Mesh(Model* model, Shader* shader) : Entity(), shader(shader), model(model) {
     transformMatrix = glm::mat4(1);
     calcTransformMatrix();
 }
 
-Mesh::Mesh(float* vertV, int vertC, Shader* shader, Texture* texture) : Entity(), shader(shader), texture(texture), vertC(vertC) {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertC, vertV, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) 0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6*sizeof(float)));
-    glEnableVertexAttribArray(2);
-
+Mesh::Mesh(Model* model, Shader* shader, Texture* texture) : Entity(), shader(shader), texture(texture), model(model) {
     transformMatrix = glm::mat4(1);
 }
 
 void Mesh::render(Entity* c) {
     calcTransformMatrix();
 
-    if (texture != nullptr)
-        texture->use();
-
-     
     Camera* camera = static_cast<Camera*>(c);
     
-
-    if (camera->boundVAO != VAO) {
-        glBindVertexArray(VAO);
-        camera->boundVAO = VAO;
+    if (texture != nullptr && (camera->boundTexture != texture->getId())) {
+        texture->use();
+        camera->boundTexture = texture->getId();
     }
 
-    if (camera->boundVBO != VBO) {
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        camera->boundVBO = VBO;
+    if (camera->boundVAO != model->getVAO()) {
+        glBindVertexArray(model->getVAO());
+        camera->boundVAO = model->getVAO();
+    }
+
+    if (camera->boundVBO != model->getVBO()) {
+        glBindBuffer(GL_ARRAY_BUFFER, model->getVBO());
+        camera->boundVBO = model->getVBO();
     }
 
     if (camera->boundShader != shader->ID) {
@@ -64,7 +40,7 @@ void Mesh::render(Entity* c) {
     shader->setVec3("color", color);
 
     //camera->setShaderLights(shader);
-    glDrawArrays(GL_TRIANGLES, 0, vertC / 5);
+    glDrawArrays(GL_TRIANGLES, 0, model->getVertC() / 5);
 }
 
 

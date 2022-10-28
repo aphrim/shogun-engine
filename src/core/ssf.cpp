@@ -40,6 +40,8 @@ void SSF::serializeMesh(std::ofstream& sceneFile, Mesh* entity) {
             && entity->shader->fragmentPath != "")
         sceneFile << "Shader " << entity->shader->vertexPath
                   << " " << entity->shader->fragmentPath << "\n";
+    if (entity->modelPath != "")
+        sceneFile << "Model " << entity->modelPath << "\n";
     sceneFile << "Id " << entity->id << "\n";
     sceneFile << "Name " << entity->name << ";\n";
     sceneFile << "; \n";
@@ -127,18 +129,19 @@ void SSF::loadMesh(std::stringstream& data) {
     Texture* texture = nullptr;
     if (texturePath != "")
         texture = new Texture(texturePath.c_str());
-    std::vector<float> model = objParser.parseObj(modelPath.c_str());
 
     Mesh* mesh;
+    Model* model = new Model(modelPath);
     if (texture != nullptr)
-        mesh = new Mesh(&(model[0]), model.size() * sizeof(float), shader, texture);
+        mesh = new Mesh(model, shader, texture);
     else
-        mesh = new Mesh(&(model[0]), model.size() * sizeof(float), shader);
+        mesh = new Mesh(model, shader);
 
     mesh->setWorldPosition(position, false);
     mesh->setWorldRotation(rotation, false);
     mesh->setWorldScale(scale, false);
     mesh->setColor(color);
+    mesh->modelPath = modelPath;
     mesh->id = id;
     mesh->name = name;
 

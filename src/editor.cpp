@@ -11,6 +11,7 @@
 #include "core/aabb.hpp"
 #include "core/include.hpp"
 #include "core/ssf.hpp"
+#include "core/model.hpp"
 #include "util/noise.hpp"
 
 using namespace SHOGUN;
@@ -72,16 +73,18 @@ int main() {
     PerlinNoise pn(true);
     Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/3dtextureshader.frag");
     Texture* texture = new Texture("textures/dirt.png");
-    std::vector<float> model = objParser.parseObj("models/cube-mapped.obj");
+    Model* model = new Model("models/cube-mapped.obj");
     for (int x = 0; x < 57; x++) {
         for (int y = 0; y < 57; y++) {
             int h = pn.noise(x / 20.0, y / 20.0, 0) * 20;
             for (int z = 0; z < 3; z++) {
-                Mesh* mesh = new Mesh(&(model[0]), model.size() * sizeof(float), shader, texture);
+                Mesh* mesh = new Mesh(model, shader, texture);
                 mesh->setPosition(Vector3(x, h - z, y));
                 mesh->id = std::to_string(x + y * x + 3);
                 mesh->name = "Cube lol";
+                mesh->modelPath = "/models/cube-mapped.obj";
                 mesh->setRotation(Vector3(270, 0, 0));
+                std::cout << mesh->model->getVAO() << " " << mesh->model->getVBO() << std::endl;
                 scene->addEntity(mesh);
             }
         }
