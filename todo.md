@@ -1,9 +1,5 @@
 # Short Term (1-3 months)
 
-Model system, Meshes just reference a model, instance render everything with same model ref
-
-Shader, Texture, Model caching
-
 Skybox
 
 GUI system

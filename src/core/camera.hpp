@@ -29,5 +29,4 @@ private:
     void renderEntity(Entity* e);
     unsigned int cameraUBO;
 };
-
 }

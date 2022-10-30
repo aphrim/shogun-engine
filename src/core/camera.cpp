@@ -11,7 +11,7 @@ Camera::Camera() {
 }
 
 void Camera::render(Camera* camera) {
-
+    
 }
 
 void Camera::renderToFramebuffer(Framebuffer* target) {
