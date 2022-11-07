@@ -31,6 +31,8 @@ protected:
     void updateChildrenRotation();
     void updateChildrenScale();
 
+    void calcTransformMatrix();
+
     Entity* parent = nullptr;
     std::vector<Entity*> children;
 
@@ -41,6 +43,8 @@ protected:
     Vector3 worldPosition;
     Vector3 worldRotation;
     Vector3 worldScale = Vector3(1);
+
+    glm::mat4 transformMatrix;
 
 };
 }

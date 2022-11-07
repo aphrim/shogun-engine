@@ -9,8 +9,6 @@
 namespace SHOGUN {
 class GUIElement : public Entity {
 public:
-    GUIElement();
-
-    virtual void render();
-}
+    virtual void render() {}
+};
 }

@@ -12,6 +12,8 @@
 #include "core/include.hpp"
 #include "core/ssf.hpp"
 #include "core/model.hpp"
+#include "core/gui/rect.hpp"
+#include "core/gui/guiRenderer.hpp"
 #include "util/noise.hpp"
 
 using namespace SHOGUN;
@@ -60,6 +62,8 @@ int main() {
     scene = new Scene();
     camera = new Camera();
     fb = new Framebuffer();
+    GUIRenderer* guiRenderer = new GUIRenderer();
+    guiRenderer->scene = scene;
 
     window->addListener(mouseMoveListener, WE_MOUSE_MOVE);
     camera->scene = scene;
@@ -84,11 +88,15 @@ int main() {
                 mesh->name = "Cube lol";
                 mesh->modelPath = "/models/cube-mapped.obj";
                 mesh->setRotation(Vector3(270, 0, 0));
-                std::cout << mesh->model->getVAO() << " " << mesh->model->getVBO() << std::endl;
                 scene->addEntity(mesh);
             }
         }
     }
+
+    Rect* rect = new Rect();
+    rect->setScale(Vector3(0.2, 0.2, 1));
+    rect->setPosition(Vector3(-0.5, 0.5, 0));
+    scene->addEntity(rect);
 
     int tick = 0;
     while (!window->shouldClose()) {
@@ -98,11 +106,16 @@ int main() {
         loop();
 
         //teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
+        rect->setRotation(rect->getRotation() + Vector3(1, 1, 1));
 
         glClear(GL_COLOR_BUFFER_BIT);
         camera->renderWidth = window->getWindowSize().x;
         camera->renderHeight = window->getWindowSize().y;
         camera->renderToFramebuffer(fb);
+
+        GUIRenderer::renderWidth = window->getWindowSize().x;
+        GUIRenderer::renderHeight = window->getWindowSize().y;
+        guiRenderer->renderToFramebuffer(fb);
         window->update();
 
         std::chrono::high_resolution_clock::time_point frameEnd = std::chrono::high_resolution_clock::now();

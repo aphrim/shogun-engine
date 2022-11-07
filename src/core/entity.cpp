@@ -55,6 +55,7 @@ void Entity::setWorldRotation(Vector3 rot, bool fromParent) {
     updateChildrenRotation();
 }
 
+
 void Entity::setWorldScale(Vector3 s, bool fromParent) {
     worldScale = s;
     if (!fromParent)
@@ -104,5 +105,14 @@ Vector3 Entity::getWorldRotation() {
 
 Vector3 Entity::getWorldScale() {
     return worldScale;
+}
+
+void Entity::calcTransformMatrix() {
+    transformMatrix = glm::mat4(1.0f);
+    transformMatrix = glm::translate(transformMatrix, worldPosition.glm());
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.x), glm::vec3(1,0,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.y), glm::vec3(0,1,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.z), glm::vec3(0,0,1));
+    transformMatrix = glm::scale(transformMatrix, worldScale.glm());
 }
 }

@@ -23,10 +23,6 @@ public:
 
     std::string modelPath;
 private:
-    void calcTransformMatrix();
-
-    glm::mat4 transformMatrix;
-
     Vector3 color;
 };
 }

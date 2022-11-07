@@ -6,6 +6,8 @@ void Scene::addEntity(Entity* entity) {
     entities.push_back(entity);
     if (dynamic_cast<Light*>(entity) != nullptr) {
         lights.push_back(static_cast<Light*>(entity));
+    } else if (dynamic_cast<GUIElement*>(entity) != nullptr) {
+        guiElements.push_back(static_cast<GUIElement*>(entity));
     }
     idLookup[entity->id] = entity;
 }
@@ -16,6 +18,10 @@ std::vector<Entity*> Scene::getEntities() {
 
 std::vector<Light*> Scene::getLights() {
     return lights;
+}
+
+std::vector<GUIElement*> Scene::getGUIElements() {
+    return guiElements;
 }
 
 Entity* Scene::getEntityById(std::string id) {
