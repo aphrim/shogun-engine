@@ -40,6 +40,7 @@ Window::Window(Vector2 size, const char* name, bool fullScreen) :
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    //glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     if (fullScreen) {
@@ -175,5 +176,9 @@ void Window::disableMouse() const {
 
 Vector2 Window::getMousePosition() const {    
     return mouse;
+}
+
+Vector2 Window::getGUISpaceMousePosition() const {
+    return mouse / size;
 }
 }

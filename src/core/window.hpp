@@ -47,6 +47,7 @@ public:
 
     void disableMouse() const;
     Vector2 getMousePosition() const;
+    Vector2 getGUISpaceMousePosition() const;
 
     std::vector<WindowVector2EventListener> sizeChangeListeners   = std::vector<WindowVector2EventListener>();
     std::vector<WindowVector2EventListener> mouseMoveListeners    = std::vector<WindowVector2EventListener>();

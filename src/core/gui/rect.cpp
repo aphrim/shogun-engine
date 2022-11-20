@@ -27,17 +27,38 @@ Rect::Rect() {
 }
 
 void Rect::render() {
-    std::cout << "Rendering GUI Rect" << std::endl;
-    calcTransformMatrix();
+    Vector3 adjustedPosition = worldPosition * Vector3(2, -2, 1) + Vector3(-1, 1, 0);
+    calcTransformMatrix(adjustedPosition, Vector3(0, 0, worldRotation.x), worldScale);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     shader->use();
 
     shader->setMat4("transform", transformMatrix);
-    shader->setVec3("color", Vector3(0.5, 0.5, 0.5));
+    shader->setVec3("color", color);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Rect::setColor(Vector3 c) {
+    color = c;
+}
+
+Vector3 Rect::getColor() {
+    return color;
+}
+
+bool Rect::collides(Vector2 pos) {
+    Vector2 wP = Vector2(worldPosition.x, worldPosition.y);
+    
+    float angle = worldRotation.x * 3.14 / 180;
+    Vector2 os = pos - wP;
+    Vector2 ros = Vector2(cos(angle) * os.x - sin(angle) * os.y, sin(angle) * os.x + cos(angle) * os.y);
+    Vector2 rpos = ros + wP;
+
+    Vector2 tr = Vector2(worldScale.x / 2, -worldScale.y / 2) + wP, bl = Vector2(-worldScale.x / 2, worldScale.y / 2) + wP;
+
+    return (rpos.x >= bl.x && rpos.x <= tr.x) && (rpos.y >= tr.y && rpos.y <= bl.y);
 }
 
 }

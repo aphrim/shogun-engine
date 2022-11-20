@@ -11,6 +11,7 @@ namespace SHOGUN {
 class GUIRenderer {
 public:
     void renderToFramebuffer(Framebuffer* target);
+    std::vector<GUIElement*> handleCollisions(Vector2 pos);
     static int renderWidth;
     static int renderHeight;
     Scene* scene;

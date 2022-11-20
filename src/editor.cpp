@@ -78,8 +78,8 @@ int main() {
     Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/3dtextureshader.frag");
     Texture* texture = new Texture("textures/dirt.png");
     Model* model = new Model("models/cube-mapped.obj");
-    for (int x = 0; x < 57; x++) {
-        for (int y = 0; y < 57; y++) {
+    for (int x = 0; x < 50; x++) {
+        for (int y = 0; y < 50; y++) {
             int h = pn.noise(x / 20.0, y / 20.0, 0) * 20;
             for (int z = 0; z < 3; z++) {
                 Mesh* mesh = new Mesh(model, shader, texture);
@@ -95,10 +95,11 @@ int main() {
 
     Rect* rect = new Rect();
     rect->setScale(Vector3(0.2, 0.2, 1));
-    rect->setPosition(Vector3(-0.5, 0.5, 0));
+    rect->setPosition(Vector3(0.25, 0.25, 0));
     scene->addEntity(rect);
 
     int tick = 0;
+
     while (!window->shouldClose()) {
         glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
         std::chrono::high_resolution_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
@@ -106,7 +107,9 @@ int main() {
         loop();
 
         //teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
-        rect->setRotation(rect->getRotation() + Vector3(1, 1, 1));
+        rect->setRotation(rect->getRotation() + Vector3(1, 0, 0));
+
+        guiRenderer->handleCollisions(window->getGUISpaceMousePosition());
 
         glClear(GL_COLOR_BUFFER_BIT);
         camera->renderWidth = window->getWindowSize().x;
@@ -120,7 +123,8 @@ int main() {
 
         std::chrono::high_resolution_clock::time_point frameEnd = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> dur = frameEnd - frameStart;
-        std::cout << "Fps:" << 1000 / dur.count() << std::endl;
+        if (tick % 1000 == 0)
+            std::cout << "Fps:" << 1000 / dur.count() << '\n';
         tick++;
     }
 

@@ -32,6 +32,7 @@ protected:
     void updateChildrenScale();
 
     void calcTransformMatrix();
+    void calcTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale);
 
     Entity* parent = nullptr;
     std::vector<Entity*> children;

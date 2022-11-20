@@ -115,4 +115,15 @@ void Entity::calcTransformMatrix() {
     transformMatrix = glm::rotate(transformMatrix, glm::radians(worldRotation.z), glm::vec3(0,0,1));
     transformMatrix = glm::scale(transformMatrix, worldScale.glm());
 }
+
+void Entity::calcTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale) {
+    transformMatrix = glm::mat4(1.0f);
+    transformMatrix = glm::translate(transformMatrix, position.glm());
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.x), glm::vec3(1,0,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.y), glm::vec3(0,1,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.z), glm::vec3(0,0,1));
+    transformMatrix = glm::scale(transformMatrix, scale.glm());
+}
+
+
 }
