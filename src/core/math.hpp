@@ -1,16 +1,12 @@
 #pragma once
 
-<<<<<<< HEAD:src/core/math.hpp
-=======
 #define SHOGUN_PI	3.1415926535897932 // first 16 digits
 #define SHOGUN_RAD	SHOGUN_PI / 180.0  // convert degrees to radians by multiplying them by this
 
-#define AVMATH_GLM_INTEGRATION
-
->>>>>>> 4c635c76473887c6cd7d030e545adc4f573272ce:src/core/vector.hpp
 #include <cmath>
 #include <stdlib.h>
 #include <ostream>
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

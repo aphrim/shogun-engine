@@ -1,9 +1,5 @@
 #include <cmath>
-<<<<<<< HEAD:src/core/math.cpp
 #include "math.hpp"
-=======
-#include "Vector.hpp"
->>>>>>> 4c635c76473887c6cd7d030e545adc4f573272ce:src/core/vector.cpp
 
 
 namespace SHOGUN {
@@ -120,15 +116,13 @@ float Vector2::manhattanDistance(Vector2 v2) {
     return d.x + d.y;
 }
 
-#ifdef AVMATH_GLM_INTEGRATION
-    glm::vec2 Vector2::glm() const {
-        return glm::vec2(x, y);
-    }
+glm::vec2 Vector2::glm() const {
+    return glm::vec2(x, y);
+}
 
-    Vector2 Vector2::fromGLM(glm::vec2 vec) {
-        return Vector2(vec.x, vec.y);
-    }
-#endif
+Vector2 Vector2::fromGLM(glm::vec2 vec) {
+    return Vector2(vec.x, vec.y);
+}
 
 //Vector3
 
