@@ -1,6 +1,9 @@
 #pragma once
 
-#define AVMATH_GLM_INTEGRATION
+#define SHOGUN_PI	3.1415926535897932 // first 16 digits
+#define SHOGUN_RAD	SHOGUN_PI / 180.0  // convert degrees to radians by multiplying them by this
+
+//#define AVMATH_GLM_INTEGRATION
 
 #include <cmath>
 #include <stdlib.h>
@@ -27,28 +30,28 @@ public:
     Vector2 abs() const;
     Vector2 square() const;
 
-    Vector2 operator+(Vector2 v);
+    Vector2 operator+(Vector2 v) const;
     void operator+=(Vector2 v);
 
-    Vector2 operator+(float f);
+    Vector2 operator+(float f) const;
     void operator+=(float f);
 
-    Vector2 operator-(Vector2 v);
+    Vector2 operator-(Vector2 v) const;
     void operator-=(Vector2 v);
 
-    Vector2 operator-(float f);
+    Vector2 operator-(float f) const;
     void operator-=(float f);
 
-    Vector2 operator*(Vector2 v);
+    Vector2 operator*(Vector2 v) const;
     void operator*=(Vector2 v);
 
-    Vector2 operator*(float f);
+    Vector2 operator*(float f) const;
     void operator*=(float f);
 
-    Vector2 operator/(Vector2 v);
+    Vector2 operator/(Vector2 v) const;
     void operator/=(Vector2 v);
 
-    Vector2 operator/(float f);
+    Vector2 operator/(float f) const;
     void operator/=(float f);
 
     static float dot(Vector2 v1, Vector2 v2);
@@ -73,42 +76,42 @@ public:
     Vector3();
 
     float length() const;
-    Vector3 normalize() const;
+    Vector3 normalize();
     Vector3 negate() const;
     Vector3 invert() const;
     Vector3 abs() const;
     Vector3 square() const;
     Vector3 radians() const;
 
-    Vector3 operator+(Vector3 v);
+    Vector3 operator+(Vector3 v) const;
     void operator+=(Vector3 v);
 
-    Vector3 operator+(float f);
+    Vector3 operator+(float f) const;
     void operator+=(float f);
 
-    Vector3 operator-(Vector3 v);
+    Vector3 operator-(Vector3 v) const;
     void operator-=(Vector3 v);
 
-    Vector3 operator-(float f);
+    Vector3 operator-(float f) const;
     void operator-=(float f);
 
-    Vector3 operator*(Vector3 v);
+    Vector3 operator*(Vector3 v) const;
     void operator*=(Vector3 v);
 
-    Vector3 operator*(float f);
+    Vector3 operator*(float f) const;
     void operator*=(float f);
 
-    Vector3 operator/(Vector3 v);
+    Vector3 operator/(Vector3 v) const;
     void operator/=(Vector3 v);
 
-    Vector3 operator/(float f);
+    Vector3 operator/(float f) const;
     void operator/=(float f);
 
     static float dot(Vector3 v1, Vector3 v2);
     static Vector3 cross(Vector3 v1, Vector3 v2);
     static float angle(Vector3 v1, Vector3 v2);
     static float distance(Vector3 v1, Vector3 v2);
-    static Vector3 reflect(Vector3 v, Vector3 n);
+    Vector3 reflect(Vector3 n);
     static Vector3 project(Vector3 v, Vector3 u);
 
 #ifdef AVMATH_GLM_INTEGRATION
