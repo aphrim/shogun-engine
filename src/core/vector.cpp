@@ -102,16 +102,16 @@ void Vector2::operator/=(float f) {
     (*this) *= (1 / f);
 }
 
-float Vector2::dot(Vector2 v1, Vector2 v2) {
-    return(v1.x * v2.x + v1.y * v2.y);
+float Vector2::dot(Vector2 v2) {
+    return(x * v2.x + y * v2.y);
 }
 
-float Vector2::distance(Vector2 v1, Vector2 v2) {
-    return (v1 - v2).length();
+float Vector2::distance(Vector2 v2) {
+    return (*this - v2).length();
 }
 
-float Vector2::manhattanDistance(Vector2 v1, Vector2 v2) {
-    Vector2 d = (v1 - v2).abs();
+float Vector2::manhattanDistance(Vector2 v2) {
+    Vector2 d = (*this - v2).abs();
     return d.x + d.y;
 }
 
@@ -136,12 +136,12 @@ Vector3 Vector3::operator/(Vector3 v) const {
     return (*this) * v.invert();
 }
 
-float Vector3::dot(Vector3 v1, Vector3 v2) {
-    return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+float Vector3::dot(Vector3 v2) const {
+    return (x * v2.x) + (y * v2.y) + (z * v2.z);
 }
 
 float Vector3::length() const {
-    return sqrt(dot(*this, *this)); // equivalent to sqrt(x^2 + y^2 + z^2)
+    return sqrt(dot(*this)); // equivalent to sqrt(x^2 + y^2 + z^2)
 }
 
 Vector3 Vector3::normalize() {
@@ -241,30 +241,31 @@ void Vector3::operator/=(float f) {
     (*this) *= (1 / f);
 }
 
-Vector3 Vector3::cross(Vector3 v1, Vector3 v2) {
-    return Vector3( v1.y * v2.z - v1.z * v2.y,
-                    v1.z * v2.x - v1.x * v2.z,
-                    v1.x * v2.y - v1.y * v2.x);
+Vector3 Vector3::cross(Vector3 v2) const {
+    return Vector3( y * v2.z - z * v2.y,
+                    z * v2.x - x * v2.z,
+                    x * v2.y - y * v2.x);
 }
 
-float Vector3::angle(Vector3 v1, Vector3 v2) {
-    return acos(dot(v1, v2) / (v1.length() * v2.length()));
+float Vector3::angle(Vector3 v2) const {
+    return acos(dot(v2) / (length() * v2.length()));
 }
 
-float Vector3::distance(Vector3 v1, Vector3 v2) {
-    return (v1 - v2).length();
+float Vector3::distance(Vector3 v2) const {
+    return (*this - v2).length();
 }
 
-Vector3 Vector3::reflect(Vector3 n) {
+Vector3 Vector3::reflect(Vector3 n) const {
 	Vector3 incident = *this; // we are the incident vector
 	Vector3 normal   = n.normalize(); // make sure the normal is normalized
 	
-    return incident - normal * dot(incident, normal) * 2;
+    return incident - normal * incident.dot(normal) * 2;
 }
 
-Vector3 Vector3::project(Vector3 v, Vector3 u) {
+Vector3 Vector3::project(Vector3 u) const {
     //To-Do
-    return v;
+    std::cout << "Vector3::project is not complete\n";
+    return *this;
 }
 
 #ifdef AVMATH_GLM_INTEGRATION
