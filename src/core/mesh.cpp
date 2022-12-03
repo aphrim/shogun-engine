@@ -4,7 +4,6 @@ namespace SHOGUN {
     
 Mesh::Mesh(Model* model, Shader* shader) : Entity(), shader(shader), model(model) {
     transformMatrix = glm::mat4(1);
-    calcTransformMatrix();
 }
 
 Mesh::Mesh(Model* model, Shader* shader, Texture* texture) : Entity(), shader(shader), texture(texture), model(model) {
@@ -12,12 +11,12 @@ Mesh::Mesh(Model* model, Shader* shader, Texture* texture) : Entity(), shader(sh
 }
 
 void Mesh::render(Entity* c) {
-    calcTransformMatrix();
+    updateTransformMatrix();
 
     Camera* camera = static_cast<Camera*>(c);
     
     if (texture != nullptr && (camera->boundTexture != texture->getId())) {
-        texture->use();
+        //texture->use();
         camera->boundTexture = texture->getId();
     }
 
@@ -34,12 +33,12 @@ void Mesh::render(Entity* c) {
     if (camera->boundShader != shader->ID) {
         shader->use();
         camera->boundShader = shader->ID;
+        camera->setShaderLights(shader);
     }
 
     shader->setMat4("transform", transformMatrix);
     shader->setVec3("color", color);
 
-    //camera->setShaderLights(shader);
     glDrawArrays(GL_TRIANGLES, 0, model->getVertC() / 5);
 }
 

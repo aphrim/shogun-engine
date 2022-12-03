@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "include.hpp"
-#include "vector.hpp"
+#include "math.hpp"
 
 namespace SHOGUN {
 
@@ -47,7 +47,7 @@ public:
 
     void disableMouse() const;
     Vector2 getMousePosition() const;
-    Vector2 getGUISpaceMousePosition() const;
+    Vector2 getGUISpaceMousePosition();
 
     std::vector<WindowVector2EventListener> sizeChangeListeners   = std::vector<WindowVector2EventListener>();
     std::vector<WindowVector2EventListener> mouseMoveListeners    = std::vector<WindowVector2EventListener>();

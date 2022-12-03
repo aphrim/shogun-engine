@@ -1,7 +1,7 @@
 //Credit to learnopengl.com for original shader utility class
 #pragma once
 #include "include.hpp"
-#include "vector.hpp"
+#include "math.hpp"
 
 namespace SHOGUN {
 class Shader

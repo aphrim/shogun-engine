@@ -1,7 +1,7 @@
 #pragma once
 #include "include.hpp"
 #include "entity.hpp"
-#include "vector.hpp"
+#include "math.hpp"
 
 namespace SHOGUN {
 class Light : public Entity {

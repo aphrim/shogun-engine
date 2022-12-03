@@ -1,6 +1,6 @@
 #pragma once
 #include "include.hpp"
-#include "vector.hpp"
+#include "math.hpp"
 
 namespace SHOGUN {
 class AABB {

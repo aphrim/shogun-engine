@@ -28,7 +28,7 @@ Rect::Rect() {
 
 void Rect::render() {
     Vector3 adjustedPosition = worldPosition * Vector3(2, -2, 1) + Vector3(-1, 1, 0);
-    calcTransformMatrix(adjustedPosition, Vector3(0, 0, worldRotation.x), worldScale);
+    updateTransformMatrix(adjustedPosition, Vector3(0, 0, worldRotation.x), worldScale);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);

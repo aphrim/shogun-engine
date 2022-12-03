@@ -1,6 +1,6 @@
 #pragma once
 #include "include.hpp"
-#include "vector.hpp"
+#include "math.hpp"
 
 namespace SHOGUN {
 
@@ -31,8 +31,8 @@ protected:
     void updateChildrenRotation();
     void updateChildrenScale();
 
-    void calcTransformMatrix();
-    void calcTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale);
+    void updateTransformMatrix();
+    void updateTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale);
 
     Entity* parent = nullptr;
     std::vector<Entity*> children;

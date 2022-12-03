@@ -55,7 +55,7 @@ Window::Window(Vector2 size, const char* name, bool fullScreen) :
 
     if (window == nullptr) {
         glfwTerminate();
-        std::cout << "Window is nullptr \n";
+        std::cout << "Window is nullptr. Failed window creation (Window::Window) \n";
         throw "Failed to initalize window";
     }
 
@@ -178,7 +178,7 @@ Vector2 Window::getMousePosition() const {
     return mouse;
 }
 
-Vector2 Window::getGUISpaceMousePosition() const {
+Vector2 Window::getGUISpaceMousePosition() {
     return mouse / size;
 }
 }

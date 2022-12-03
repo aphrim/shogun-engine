@@ -1,0 +1,128 @@
+#pragma once
+
+#include <cmath>
+#include <stdlib.h>
+#include <ostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+namespace SHOGUN {
+class Vector2 {
+public:
+    float x;
+    float y;
+
+    Vector2(float x, float y);
+    Vector2(float n);
+    Vector2();
+
+    float length() const;
+    Vector2 normalize() const;
+    Vector2 negate() const;
+    Vector2 invert() const;
+    Vector2 abs() const;
+    Vector2 square() const;
+
+    Vector2 operator+(Vector2 v);
+    void operator+=(Vector2 v);
+
+    Vector2 operator+(float f);
+    void operator+=(float f);
+
+    Vector2 operator-(Vector2 v);
+    void operator-=(Vector2 v);
+
+    Vector2 operator-(float f);
+    void operator-=(float f);
+
+    Vector2 operator*(Vector2 v);
+    void operator*=(Vector2 v);
+
+    Vector2 operator*(float f);
+    void operator*=(float f);
+
+    Vector2 operator/(Vector2 v);
+    void operator/=(Vector2 v);
+
+    Vector2 operator/(float f);
+    void operator/=(float f);
+
+    static float dot(Vector2 v1, Vector2 v2);
+    static float distance(Vector2 v1, Vector2 v2);
+    static float manhattanDistance(Vector2 v1, Vector2 v2);
+
+    glm::vec2 glm() const;
+    static Vector2 fromGLM(glm::vec2 vec);
+};
+
+class Vector3 {
+public:
+    float x;
+    float y;
+    float z;
+
+    Vector3(float x, float y, float z);
+    Vector3(Vector2 v, float z);
+    Vector3(float n);
+    Vector3();
+
+    float length() const;
+    Vector3 normalize() const;
+    Vector3 negate() const;
+    Vector3 invert() const;
+    Vector3 abs() const;
+    Vector3 square() const;
+    Vector3 radians() const;
+
+    Vector3 operator+(Vector3 v);
+    void operator+=(Vector3 v);
+
+    Vector3 operator+(float f);
+    void operator+=(float f);
+
+    Vector3 operator-(Vector3 v);
+    void operator-=(Vector3 v);
+
+    Vector3 operator-(float f);
+    void operator-=(float f);
+
+    Vector3 operator*(Vector3 v);
+    void operator*=(Vector3 v);
+
+    Vector3 operator*(float f);
+    void operator*=(float f);
+
+    Vector3 operator/(Vector3 v);
+    void operator/=(Vector3 v);
+
+    Vector3 operator/(float f);
+    void operator/=(float f);
+
+    static float dot(Vector3 v1, Vector3 v2);
+    static Vector3 cross(Vector3 v1, Vector3 v2);
+    static float angle(Vector3 v1, Vector3 v2);
+    static float distance(Vector3 v1, Vector3 v2);
+    static Vector3 reflect(Vector3 v, Vector3 n);
+    static Vector3 project(Vector3 v, Vector3 u);
+
+    glm::vec3 glm() const;
+
+    static Vector3 fromGLM(glm::vec3 vec);
+};
+
+
+inline std::ostream& operator<<(std::ostream& out, const Vector3& vec) {
+    out << vec.x << " " << vec.y << " " << vec.z;
+    return out;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const Vector2& vec) {
+    out << vec.x << " " << vec.y;
+    return out;
+}
+
+//Thanks Vetra for suggestion to move out of entity specific code
+glm::mat4 calc_transform_matrix(const Vector3 position, const Vector3 rotation, const Vector3 scale);
+
+} //End namespace SHOGUN

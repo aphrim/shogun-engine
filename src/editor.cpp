@@ -75,46 +75,60 @@ int main() {
     //Entity* teapot = scene->getEntityById("2");
 
     PerlinNoise pn(true);
-    Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/3dtextureshader.frag");
-    Texture* texture = new Texture("textures/dirt.png");
-    Model* model = new Model("models/cube-mapped.obj");
-    for (int x = 0; x < 50; x++) {
-        for (int y = 0; y < 50; y++) {
-            int h = pn.noise(x / 20.0, y / 20.0, 0) * 20;
-            for (int z = 0; z < 3; z++) {
-                Mesh* mesh = new Mesh(model, shader, texture);
-                mesh->setPosition(Vector3(x, h - z, y));
-                mesh->id = std::to_string(x + y * x + 3);
-                mesh->name = "Cube lol";
-                mesh->modelPath = "/models/cube-mapped.obj";
-                mesh->setRotation(Vector3(270, 0, 0));
-                scene->addEntity(mesh);
-            }
+    Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/pbrshader.frag");
+    Texture* metallicTexture = new Texture("textures/rusted-iron/metallic.png");
+    Texture* normalTexture = new Texture("textures/rusted-iron/normal.png");
+    Texture* roughnessTexture = new Texture("textures/rusted-iron/roughness.png");
+    Texture* albedoTexture = new Texture("textures/rusted-iron/albedo.png");
+    shader->setInt("albedoMap", 0);
+    shader->setInt("metallicMap", 1);
+    shader->setInt("roughnessMap", 2);
+    shader->setInt("normalMap", 3);
+    Model* model = new Model("models/cube.obj");
+
+    std::cout << "Created Textures" << std::endl;
+
+    Mesh* mesh = new Mesh(model, shader);
+    mesh->id = "Cube lol";
+    mesh->name = "Cube lol";
+    mesh->modelPath = "/models/cube.obj";
+    mesh->setScale(Vector3(20,2,20));
+    mesh->setPosition(Vector3(-5,0,-5));
+    scene->addEntity(mesh);
+
+    std::cout << "Added Mesh" << std::endl;
+
+    for (int x = 0; x < 2; x++) {
+        for (int y = 0; y < 2; y++) {
+            Light* light = new Light();
+            light->setPosition(Vector3(-4 + x * 8, 2, -4 + y * 8));
+            light->setColor(Vector3(1, 1, 1));
+            scene->addEntity(light);
         }
     }
 
-    Rect* rect = new Rect();
-    rect->setScale(Vector3(0.2, 0.2, 1));
-    rect->setPosition(Vector3(0.25, 0.25, 0));
-    scene->addEntity(rect);
-
     int tick = 0;
 
+    std::cout << "Completed Initilization" << std::endl;
     while (!window->shouldClose()) {
         glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
         std::chrono::high_resolution_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
 
         loop();
 
-        //teapot->setRotation(teapot->getRotation() + Vector3(1, 0, 0));
-        rect->setRotation(rect->getRotation() + Vector3(1, 0, 0));
-
-        guiRenderer->handleCollisions(window->getGUISpaceMousePosition());
-
         glClear(GL_COLOR_BUFFER_BIT);
         camera->renderWidth = window->getWindowSize().x;
         camera->renderHeight = window->getWindowSize().y;
         camera->renderToFramebuffer(fb);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, albedoTexture->getId());
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, metallicTexture->getId());
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, roughnessTexture->getId());
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, normalTexture->getId());
 
         GUIRenderer::renderWidth = window->getWindowSize().x;
         GUIRenderer::renderHeight = window->getWindowSize().y;
@@ -123,8 +137,7 @@ int main() {
 
         std::chrono::high_resolution_clock::time_point frameEnd = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> dur = frameEnd - frameStart;
-        if (tick % 1000 == 0)
-            std::cout << "Fps:" << 1000 / dur.count() << '\n';
+        std::cout << "Fps:" << 1000 / dur.count() << '\n';
         tick++;
     }
 
