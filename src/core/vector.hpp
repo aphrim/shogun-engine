@@ -3,7 +3,7 @@
 #define SHOGUN_PI	3.1415926535897932 // first 16 digits
 #define SHOGUN_RAD	SHOGUN_PI / 180.0  // convert degrees to radians by multiplying them by this
 
-//#define AVMATH_GLM_INTEGRATION
+#define AVMATH_GLM_INTEGRATION
 
 #include <cmath>
 #include <stdlib.h>
@@ -54,9 +54,9 @@ public:
     Vector2 operator/(float f) const;
     void operator/=(float f);
 
-    static float dot(Vector2 v1, Vector2 v2);
-    static float distance(Vector2 v1, Vector2 v2);
-    static float manhattanDistance(Vector2 v1, Vector2 v2);
+    float dot(Vector2 v2);
+    float distance(Vector2 v2);
+    float manhattanDistance(Vector2 v2);
 
 #ifdef AVMATH_GLM_INTEGRATION
     glm::vec2 glm() const;
@@ -107,12 +107,12 @@ public:
     Vector3 operator/(float f) const;
     void operator/=(float f);
 
-    static float dot(Vector3 v1, Vector3 v2);
-    static Vector3 cross(Vector3 v1, Vector3 v2);
-    static float angle(Vector3 v1, Vector3 v2);
-    static float distance(Vector3 v1, Vector3 v2);
-    Vector3 reflect(Vector3 n);
-    static Vector3 project(Vector3 v, Vector3 u);
+    float dot(Vector3 v2) const;
+    float angle(Vector3 v2) const;
+    float distance(Vector3 v2) const;
+    Vector3 cross(Vector3 v2) const;
+    Vector3 reflect(Vector3 n) const;
+    Vector3 project(Vector3 u) const;
 
 #ifdef AVMATH_GLM_INTEGRATION
     glm::vec3 glm() const;
