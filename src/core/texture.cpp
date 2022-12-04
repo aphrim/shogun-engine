@@ -4,11 +4,11 @@
 
 namespace SHOGUN {
 
-Texture::Texture(const char* path) : path(path) {
+Texture::Texture(std::string path) : path(path) {
     std::cout << "Loading Texture: " << path << std::endl;
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
     GLenum format;
     if (nrChannels == 1)
@@ -44,9 +44,4 @@ Texture::Texture(int width, int height) {
 unsigned int Texture::getId() {
     return ID;
 }
-
-void Texture::use() {
-    glBindTexture(GL_TEXTURE_2D, ID);
-}
-
 }

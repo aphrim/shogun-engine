@@ -12,13 +12,16 @@ public:
     void updateModelData(float* vertV, int vertC);
 
     static int count;
-    int Id;
 
+    int getId();
     int getVertC();
     unsigned int getVAO();
     unsigned int getVBO();
+
+    std::string path;
 private:
     unsigned int VAO, VBO;
     int vertC;
+    int Id;
 };
 }

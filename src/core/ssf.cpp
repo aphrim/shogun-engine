@@ -34,14 +34,18 @@ void SSF::serializeMesh(std::ofstream& sceneFile, Mesh* entity) {
     sceneFile << "Rotation " << entity->getWorldRotation() << "\n";
     sceneFile << "Scale " << entity->getWorldScale() << "\n";
     sceneFile << "Color " << entity->getColor() << "\n";
-    if (entity->texture != nullptr && entity->texture->path != "")
-        sceneFile << "Texture " << entity->texture->path << "\n";
+    if (entity->material != nullptr) {
+        sceneFile << "Albedo " << entity->material->albedo->path << "\n";
+        sceneFile << "Metallic " << entity->material->metallic->path << "\n";
+        sceneFile << "Roughness " << entity->material->roughness->path << "\n";
+        sceneFile << "Normal " << entity->material->normal->path << "\n";
+    }
     if (entity->shader != nullptr && entity->shader->vertexPath != "" 
             && entity->shader->fragmentPath != "")
         sceneFile << "Shader " << entity->shader->vertexPath
                   << " " << entity->shader->fragmentPath << "\n";
-    if (entity->modelPath != "")
-        sceneFile << "Model " << entity->modelPath << "\n";
+    if (entity->model->path != "")
+        sceneFile << "Model " << entity->model->path << "\n";
     sceneFile << "Id " << entity->id << "\n";
     sceneFile << "Name " << entity->name << ";\n";
     sceneFile << "; \n";
@@ -90,7 +94,7 @@ void SSF::loadNext(std::stringstream& data) {
 
 void SSF::loadMesh(std::stringstream& data) {   
     Vector3 position, rotation, scale, color;
-    std::string texturePath, modelPath, vertShaderPath, fragShaderPath, name, id;
+    std::string albedoPath, metallicPath, roughnessPath, normalPath, modelPath, vertShaderPath, fragShaderPath, name, id;
     while (true) {
         std::string property;
         data >> property;
@@ -106,8 +110,14 @@ void SSF::loadMesh(std::stringstream& data) {
             data >> color.x >> color.y >> color.z;
         else if (property == "Shader")
             data >> vertShaderPath >> fragShaderPath;
-        else if (property == "Texture")
-            data >> texturePath;
+        else if (property == "Albedo")
+            data >> albedoPath;
+        else if (property == "Metallic")
+            data >> metallicPath;
+        else if (property == "Roughness")
+            data >> roughnessPath;
+        else if (property == "Normal")
+            data >> normalPath;
         else if (property == "Model")
             data >> modelPath;
         else if (property == "Name") {
@@ -125,23 +135,17 @@ void SSF::loadMesh(std::stringstream& data) {
             data >> id;
     }
 
-    Shader* shader = new Shader(vertShaderPath.c_str(), fragShaderPath.c_str());
-    Texture* texture = nullptr;
-    if (texturePath != "")
-        texture = new Texture(texturePath.c_str());
-
     Mesh* mesh;
-    Model* model = new Model(modelPath);
-    if (texture != nullptr)
-        mesh = new Mesh(model, shader, texture);
-    else
-        mesh = new Mesh(model, shader);
+    Model* model = loadModel(modelPath);
+    Shader* shader = loadShader(vertShaderPath, fragShaderPath);
+    Material* material = loadMaterial(albedoPath, metallicPath, roughnessPath, normalPath);
+
+    mesh = new Mesh(model, shader, material);
 
     mesh->setWorldPosition(position, false);
     mesh->setWorldRotation(rotation, false);
     mesh->setWorldScale(scale, false);
     mesh->setColor(color);
-    mesh->modelPath = modelPath;
     mesh->id = id;
     mesh->name = name;
 
@@ -189,6 +193,44 @@ void SSF::loadLight(std::stringstream& data) {
     light->id = id;
 
     scene->addEntity(light);
+}
+
+Texture* SSF::loadTexture(std::string path) {
+    if (textureCache[path]) return textureCache[path];
+    Texture* texture = new Texture(path);
+    textureCache[path] = texture;
+    return texture;
+}
+
+Material* SSF::loadMaterial(std::string albedoPath, std::string metallicPath,
+                            std::string roughnessPath, std::string normalPath) {
+    if (materialCache[albedoPath + "|" + metallicPath + "|"
+                        + roughnessPath + "|" + normalPath] != nullptr) 
+        return materialCache[albedoPath + "|" + metallicPath + "|"
+                                + roughnessPath + "|" + normalPath];
+
+    Material* material = new Material(loadTexture(albedoPath), loadTexture(metallicPath),
+                                        loadTexture(roughnessPath), loadTexture(normalPath));
+    materialCache[albedoPath + "|" + metallicPath + "|" 
+        + roughnessPath + "|" + normalPath] = material;
+    return material;
+}
+
+Model* SSF::loadModel(std::string path) {
+    if (modelCache[path] != nullptr)
+        return modelCache[path];
+    Model* model = new Model(path);
+    modelCache[path] = model;
+    return model;
+}
+
+Shader* SSF::loadShader(std::string vertShaderPath, std::string fragShaderPath) {
+    if (shaderCache[vertShaderPath + "|" + fragShaderPath] != nullptr)
+        return shaderCache[vertShaderPath + "|" + fragShaderPath];
+
+    Shader* shader = new Shader(vertShaderPath, fragShaderPath);
+    shaderCache[vertShaderPath + "|" + fragShaderPath] = shader;
+    return shader;
 }
 
 }

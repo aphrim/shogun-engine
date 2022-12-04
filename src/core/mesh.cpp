@@ -2,11 +2,7 @@
 
 namespace SHOGUN {
     
-Mesh::Mesh(Model* model, Shader* shader) : Entity(), shader(shader), model(model) {
-    transformMatrix = glm::mat4(1);
-}
-
-Mesh::Mesh(Model* model, Shader* shader, Texture* texture) : Entity(), shader(shader), texture(texture), model(model) {
+Mesh::Mesh(Model* model, Shader* shader, Material* material) : Entity(), shader(shader), model(model), material(material) {
     transformMatrix = glm::mat4(1);
 }
 
@@ -15,9 +11,9 @@ void Mesh::render(Entity* c) {
 
     Camera* camera = static_cast<Camera*>(c);
     
-    if (texture != nullptr && (camera->boundTexture != texture->getId())) {
-        //texture->use();
-        camera->boundTexture = texture->getId();
+    if (camera->boundMaterial != material->getId()) {
+        material->use();
+        camera->boundMaterial = material->getId();
     }
 
     if (camera->boundVAO != model->getVAO()) {

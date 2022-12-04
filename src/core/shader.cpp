@@ -2,7 +2,7 @@
 #include "shader.hpp"
 
 namespace SHOGUN {
-Shader::Shader(const char* vertexPath, const char* fragmentPath) :
+Shader::Shader(const std::string vertexPath, const std::string fragmentPath) :
     vertexPath(vertexPath), fragmentPath(fragmentPath) 
 {
     std::string vertexCode;
@@ -74,6 +74,11 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) :
 
     unsigned int uniformBlockIndex = glGetUniformBlockIndex(ID, "CameraMatrix");
     glUniformBlockBinding(ID, uniformBlockIndex, 0);
+
+    glUniform1i(glGetUniformLocation(ID, "albedoMap"), 0);
+    glUniform1i(glGetUniformLocation(ID, "metallicMap"), 1);
+    glUniform1i(glGetUniformLocation(ID, "roughnessMap"), 2);
+    glUniform1i(glGetUniformLocation(ID, "normalMap"), 3);
       
     glDeleteShader(vertex);
     glDeleteShader(fragment);

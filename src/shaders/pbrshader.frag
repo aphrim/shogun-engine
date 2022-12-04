@@ -1,4 +1,5 @@
 #version 330 core
+//Modified version of PBR shader from learnopengl.com
 in vec2 TexCord;
 in vec3 FragPos;
 in vec3 Normal;
@@ -110,7 +111,7 @@ void main()
         Lo += (kD * albedo / lightCount + specular) * radiance * NdotL; 
     }   
   
-    vec3 ambient = vec3(0.02) * albedo * ao;
+    vec3 ambient = vec3(0.001) * albedo * ao;
     vec3 color = ambient + Lo;
 	
     color = color / (color + vec3(1.0));

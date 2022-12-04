@@ -20,7 +20,7 @@ Model::Model(float* vertV, int vertC): vertC(vertC) {
     glEnableVertexAttribArray(2);
 }
 
-Model::Model(std::string filePath) {
+Model::Model(std::string filePath) : path(filePath) {
     Id = count++;
 
     OBJParser objParser;
@@ -47,6 +47,7 @@ void Model::updateModelData(float* vertV, int vertC) {
     glBufferData(GL_ARRAY_BUFFER, vertC, vertV, GL_DYNAMIC_DRAW);
 }
 
+int Model::getId() { return Id; }
 unsigned int Model::getVAO() { return VAO; }
 unsigned int Model::getVBO() { return VBO; }
 int Model::getVertC() { return vertC; }

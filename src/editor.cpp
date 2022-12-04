@@ -6,6 +6,7 @@
 #include "core/camera.hpp"
 #include "core/shader.hpp"
 #include "core/texture.hpp"
+#include "core/material.hpp"
 #include "core/obj.hpp"
 #include "core/light.hpp"
 #include "core/aabb.hpp"
@@ -70,33 +71,19 @@ int main() {
     fb->makeDefault();
 
     SSF ssf = SSF(scene);
-    //ssf.loadFromFile("src/sceneSaveNew.ssf");
-
-    //Entity* teapot = scene->getEntityById("2");
 
     PerlinNoise pn(true);
     Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/pbrshader.frag");
-    Texture* metallicTexture = new Texture("textures/rusted-iron/metallic.png");
-    Texture* normalTexture = new Texture("textures/rusted-iron/normal.png");
-    Texture* roughnessTexture = new Texture("textures/rusted-iron/roughness.png");
-    Texture* albedoTexture = new Texture("textures/rusted-iron/albedo.png");
-    shader->setInt("albedoMap", 0);
-    shader->setInt("metallicMap", 1);
-    shader->setInt("roughnessMap", 2);
-    shader->setInt("normalMap", 3);
+    Material* rustedIronMaterial = new Material("textures/rusted-iron", "png");
     Model* model = new Model("models/cube.obj");
 
-    std::cout << "Created Textures" << std::endl;
-
-    Mesh* mesh = new Mesh(model, shader);
+    Mesh* mesh = new Mesh(model, shader, rustedIronMaterial);
     mesh->id = "Cube lol";
     mesh->name = "Cube lol";
-    mesh->modelPath = "/models/cube.obj";
     mesh->setScale(Vector3(20,2,20));
     mesh->setPosition(Vector3(-5,0,-5));
     scene->addEntity(mesh);
 
-    std::cout << "Added Mesh" << std::endl;
 
     for (int x = 0; x < 2; x++) {
         for (int y = 0; y < 2; y++) {
@@ -108,8 +95,7 @@ int main() {
     }
 
     int tick = 0;
-
-    std::cout << "Completed Initilization" << std::endl;
+    ssf.serializeScene("src/sceneSave.ssf");
     while (!window->shouldClose()) {
         glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
         std::chrono::high_resolution_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
@@ -117,18 +103,10 @@ int main() {
         loop();
 
         glClear(GL_COLOR_BUFFER_BIT);
+        rustedIronMaterial->use();
         camera->renderWidth = window->getWindowSize().x;
         camera->renderHeight = window->getWindowSize().y;
         camera->renderToFramebuffer(fb);
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, albedoTexture->getId());
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, metallicTexture->getId());
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, roughnessTexture->getId());
-        glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, normalTexture->getId());
 
         GUIRenderer::renderWidth = window->getWindowSize().x;
         GUIRenderer::renderHeight = window->getWindowSize().y;
@@ -141,5 +119,4 @@ int main() {
         tick++;
     }
 
-    //ssf.serializeScene("src/sceneSaveNew.ssf");
 }

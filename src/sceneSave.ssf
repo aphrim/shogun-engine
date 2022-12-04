@@ -1,29 +1,15 @@
-Mesh
-
-Id 1
-Name My Cube;
-
-Position 0 0 0
+Mesh 
+ 
+Position -5 0 -5
 Rotation 0 0 0
-Scale 2 2 2
-
-Texture textures/proto.png
+Scale 20 2 20
+Color 0 0 0
+Albedo textures/rusted-iron/albedo.png
+Metallic textures/rusted-iron/metallic.png
+Roughness textures/rusted-iron/roughness.png
+Normal textures/rusted-iron/normal.png
+Shader shaders/3dtextureshader.vert shaders/pbrshader.frag
 Model models/cube.obj
-Shader shaders/3dtextureshader.vert shaders/3dtextureshader.frag
-Color 0.5 0.5 0.5
-;
-
-Mesh
-
-Id 2
-Name Teapot Lol;
-
-Position 0 5 0
-Rotation 0 90 0
-Scale 0.01 0.01 0.01
-
-Model models/teapot.obj
-Shader shaders/3dshader.vert shaders/3dshader.frag
-Color 1 0 0
-;
-
+Id Cube lol
+Name Cube lol;
+; 

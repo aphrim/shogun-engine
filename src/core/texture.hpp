@@ -4,11 +4,10 @@
 namespace SHOGUN {
 class Texture {
 public:
-    Texture(const char* texturePath);
+    Texture(std::string texturePath);
     Texture(int width, int height);
 
     unsigned int getId();
-    void use();
     
     std::string path;
 private:
