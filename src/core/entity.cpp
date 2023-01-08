@@ -115,5 +115,9 @@ void Entity::updateTransformMatrix(Vector3 position, Vector3 rotation, Vector3 s
     transformMatrix = calc_transform_matrix(position, rotation, scale);
 }
 
+void Entity::updateTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale, Vector3 adjScale) {
+    transformMatrix = calc_transform_matrix(position, rotation, scale, adjScale);
+}
+
 
 }

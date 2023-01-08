@@ -197,7 +197,7 @@ void SSF::loadLight(std::stringstream& data) {
 
 Texture* SSF::loadTexture(std::string path) {
     if (textureCache[path]) return textureCache[path];
-    Texture* texture = new Texture(path);
+    Texture* texture = new Texture(path, TEXTURE_2D);
     textureCache[path] = texture;
     return texture;
 }

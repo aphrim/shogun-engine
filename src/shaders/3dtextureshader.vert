@@ -21,6 +21,6 @@ void main() {
     FragPos = vec3(transform * vec4(aPos, 1.0));
 
     TexCord = aTexCord;
-    Normal = aNormal;
+    Normal = mat3(transform) * aNormal;
     Color = color;
 }

@@ -128,5 +128,7 @@ inline std::ostream& operator<<(std::ostream& out, const Vector2& vec) {
 
 //Thanks Vetra for suggestion to move out of entity specific code
 glm::mat4 calc_transform_matrix(const Vector3 position, const Vector3 rotation, const Vector3 scale);
+//For cases where adjusting size of object to fit inside a boundary (ex UI elements)
+glm::mat4 calc_transform_matrix(const Vector3 position, const Vector3 rotation, const Vector3 scale, const Vector3 adjScale);
 
 } //End namespace SHOGUN

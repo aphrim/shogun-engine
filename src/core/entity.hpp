@@ -33,6 +33,7 @@ protected:
 
     void updateTransformMatrix();
     void updateTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale);
+    void updateTransformMatrix(Vector3 position, Vector3 rotation, Vector3 scale, Vector3 adjScale);
 
     Entity* parent = nullptr;
     std::vector<Entity*> children;

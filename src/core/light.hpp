@@ -6,7 +6,7 @@
 namespace SHOGUN {
 class Light : public Entity {
 public:
-    float strength;
+    float strength = 1;
 
     Vector3 getColor() {
         return color;

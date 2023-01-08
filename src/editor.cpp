@@ -65,6 +65,7 @@ int main() {
     fb = new Framebuffer();
     GUIRenderer* guiRenderer = new GUIRenderer();
     guiRenderer->scene = scene;
+    guiRenderer->window = window;
 
     window->addListener(mouseMoveListener, WE_MOUSE_MOVE);
     camera->scene = scene;
@@ -74,22 +75,37 @@ int main() {
 
     PerlinNoise pn(true);
     Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/pbrshader.frag");
+    Material* carpetMaterial = new Material("textures/mortar-bricks", "png");
     Material* rustedIronMaterial = new Material("textures/rusted-iron", "png");
     Model* model = new Model("models/cube.obj");
 
     Mesh* mesh = new Mesh(model, shader, rustedIronMaterial);
-    mesh->id = "Cube lol";
-    mesh->name = "Cube lol";
-    mesh->setScale(Vector3(20,2,20));
-    mesh->setPosition(Vector3(-5,0,-5));
+    mesh->id = "Cube 1";
+    mesh->name = "Cube 1";
+    mesh->setScale(Vector3(7,1,7));
+    mesh->setPosition(Vector3(-5,0,4));
     scene->addEntity(mesh);
+
+    mesh = new Mesh(model, shader, carpetMaterial);
+    mesh->id = "Cube 2";
+    mesh->name = "Cube 2";
+    mesh->setScale(Vector3(7,1,7));
+    mesh->setPosition(Vector3(5,0,5));
+    scene->addEntity(mesh);
+
+    Rect* rect = new Rect();
+    rect->setScale(Vector3(500, 100, 0));
+    rect->setPosition(Vector3(200, 200, 1));
+    scene->addEntity(rect);
+
 
 
     for (int x = 0; x < 2; x++) {
         for (int y = 0; y < 2; y++) {
             Light* light = new Light();
-            light->setPosition(Vector3(-4 + x * 8, 2, -4 + y * 8));
+            light->setPosition(Vector3(-4 + x * 8, 1, -4 + y * 8));
             light->setColor(Vector3(1, 1, 1));
+            light->strength = 5;
             scene->addEntity(light);
         }
     }
@@ -108,8 +124,13 @@ int main() {
         camera->renderHeight = window->getWindowSize().y;
         camera->renderToFramebuffer(fb);
 
-        GUIRenderer::renderWidth = window->getWindowSize().x;
-        GUIRenderer::renderHeight = window->getWindowSize().y;
+        std::cout << window->mouse << std::endl;
+        rect->setRotation(rect->getRotation() + Vector3(1, 0, 0));
+        if (rect->collides(window->mouse))
+            rect->setColor(Vector3(0,1,0));
+        else
+            rect->setColor(Vector3(1,0,0));
+
         guiRenderer->renderToFramebuffer(fb);
         window->update();
 

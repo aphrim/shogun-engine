@@ -17,6 +17,7 @@ public:
     Texture* metallic;
     Texture* roughness;
     Texture* normal;
+    Texture* ao;
 
 private:
     int Id;

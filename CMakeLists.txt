@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_CXX_STANDARD 17)
+SET ( CMAKE_CXX_FLAGS "-s -Ofast -s" CACHE STRING "compile flags" FORCE)
 
 project(Shogun_Engine)
 

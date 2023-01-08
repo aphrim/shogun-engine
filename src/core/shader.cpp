@@ -75,10 +75,13 @@ Shader::Shader(const std::string vertexPath, const std::string fragmentPath) :
     unsigned int uniformBlockIndex = glGetUniformBlockIndex(ID, "CameraMatrix");
     glUniformBlockBinding(ID, uniformBlockIndex, 0);
 
+    glUseProgram(ID);
+
     glUniform1i(glGetUniformLocation(ID, "albedoMap"), 0);
     glUniform1i(glGetUniformLocation(ID, "metallicMap"), 1);
     glUniform1i(glGetUniformLocation(ID, "roughnessMap"), 2);
     glUniform1i(glGetUniformLocation(ID, "normalMap"), 3);
+    glUniform1i(glGetUniformLocation(ID, "aoMap"), 4);
       
     glDeleteShader(vertex);
     glDeleteShader(fragment);

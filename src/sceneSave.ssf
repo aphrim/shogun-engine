@@ -1,8 +1,8 @@
 Mesh 
  
-Position -5 0 -5
+Position -5 0 4
 Rotation 0 0 0
-Scale 20 2 20
+Scale 7 1 7
 Color 0 0 0
 Albedo textures/rusted-iron/albedo.png
 Metallic textures/rusted-iron/metallic.png
@@ -10,6 +10,21 @@ Roughness textures/rusted-iron/roughness.png
 Normal textures/rusted-iron/normal.png
 Shader shaders/3dtextureshader.vert shaders/pbrshader.frag
 Model models/cube.obj
-Id Cube lol
-Name Cube lol;
+Id Cube 1
+Name Cube 1;
+; 
+Mesh 
+ 
+Position 5 0 5
+Rotation 0 0 0
+Scale 7 1 7
+Color 0 0 0
+Albedo textures/mortar-bricks/albedo.png
+Metallic textures/mortar-bricks/metallic.png
+Roughness textures/mortar-bricks/roughness.png
+Normal textures/mortar-bricks/normal.png
+Shader shaders/3dtextureshader.vert shaders/pbrshader.frag
+Model models/cube.obj
+Id Cube 2
+Name Cube 2;
 ; 

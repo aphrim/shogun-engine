@@ -285,4 +285,16 @@ glm::mat4 calc_transform_matrix(const Vector3 position, const Vector3 rotation, 
     return transformMatrix;
 }
 
+glm::mat4 calc_transform_matrix(const Vector3 position, const Vector3 rotation, const Vector3 scale, const Vector3 adjScale) {
+    glm::mat4 transformMatrix = glm::mat4(1.0f);
+    transformMatrix = glm::translate(transformMatrix, position.glm());
+    transformMatrix = glm::scale(transformMatrix, adjScale.glm());
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.x), glm::vec3(1,0,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.y), glm::vec3(0,1,0));
+    transformMatrix = glm::rotate(transformMatrix, glm::radians(rotation.z), glm::vec3(0,0,1));
+    transformMatrix = glm::scale(transformMatrix, scale.glm());
+    return transformMatrix;
+}
+
+
 }
