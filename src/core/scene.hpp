@@ -8,6 +8,7 @@ namespace SHOGUN {
 class Scene {
 public:
     void addEntity(Entity* entity);
+    void tick();
     std::vector<Entity*> getEntities();
     std::vector<Light*> getLights();
     std::vector<GUIElement*> getGUIElements();

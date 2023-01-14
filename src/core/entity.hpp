@@ -20,6 +20,7 @@ public:
     Vector3 getWorldScale();
 
     virtual void render(Entity* camera);
+    virtual void tick() {}
 
     std::vector<Entity*> getChildren();
     void addChild(Entity* child);

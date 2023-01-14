@@ -14,6 +14,7 @@
 #include "core/ssf.hpp"
 #include "core/model.hpp"
 #include "core/gui/rect.hpp"
+#include "core/gui/button.hpp"
 #include "core/gui/guiRenderer.hpp"
 #include "util/noise.hpp"
 
@@ -29,7 +30,7 @@ std::vector<AABB> collision;
 OBJParser objParser;
 
 void mouseMoveListener(Vector2 delta) {
-    if (window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+    if (window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_RIGHT))
         camera->setRotation(camera->getRotation() + Vector3(-delta.y, delta.x, 0));
 }
 
@@ -93,12 +94,13 @@ int main() {
     mesh->setPosition(Vector3(5,0,5));
     scene->addEntity(mesh);
 
-    Rect* rect = new Rect();
-    rect->setScale(Vector3(500, 100, 0));
-    rect->setPosition(Vector3(200, 200, 1));
-    scene->addEntity(rect);
-
-
+    Button* button = new Button();
+    button->setScale(Vector3(500, 100, 0));
+    button->setPosition(Vector3(200, 200, 1));
+    button->pressColor = Vector3(0,0,1);
+    button->hoverColor = Vector3(0,1,0);
+    button->baseColor = Vector3(1,0,0);
+    scene->addEntity(button);
 
     for (int x = 0; x < 2; x++) {
         for (int y = 0; y < 2; y++) {
@@ -125,11 +127,8 @@ int main() {
         camera->renderToFramebuffer(fb);
 
         std::cout << window->mouse << std::endl;
-        rect->setRotation(rect->getRotation() + Vector3(1, 0, 0));
-        if (rect->collides(window->mouse))
-            rect->setColor(Vector3(0,1,0));
-        else
-            rect->setColor(Vector3(1,0,0));
+        button->setRotation(button->getRotation() + Vector3(1, 0, 0));
+        scene->tick();
 
         guiRenderer->renderToFramebuffer(fb);
         window->update();

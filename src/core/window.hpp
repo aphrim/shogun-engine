@@ -46,6 +46,7 @@ public:
 
 
     void disableMouse() const;
+    void resetCursor() const;
     Vector2 getMousePosition() const;
     Vector2 getGUISpaceMousePosition();
 
@@ -57,6 +58,11 @@ public:
     std::vector<WindowIntEventListener>     keyReleaseListeners   = std::vector<WindowIntEventListener>();
     Vector2 mouse;
     Vector2 size;
+
+    int hoverCount;
+
+    GLFWcursor* cursorNormal;
+    GLFWcursor* cursorHover;
 private:
     GLFWwindow* window;
     std::string name;

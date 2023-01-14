@@ -12,6 +12,11 @@ void Scene::addEntity(Entity* entity) {
     idLookup[entity->id] = entity;
 }
 
+void Scene::tick() {
+    for (Entity* entity : entities) entity->tick();
+    for (GUIElement* el : guiElements) el->tick();
+}
+
 std::vector<Entity*> Scene::getEntities() {
     return entities;
 }

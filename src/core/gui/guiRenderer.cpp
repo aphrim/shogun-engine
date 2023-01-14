@@ -12,14 +12,4 @@ namespace SHOGUN {
         }
         glEnable(GL_DEPTH_TEST);
     }
-
-    std::vector<GUIElement*> GUIRenderer::handleCollisions(Vector2 pos) {
-        std::vector<GUIElement*> ret;
-        for (GUIElement* el : scene->getGUIElements()) {
-            if (el->collides(pos)) {
-                ret.push_back(el);
-            }
-        }
-        return ret;
-    }
 }

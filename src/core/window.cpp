@@ -67,6 +67,9 @@ Window::Window(Vector2 size, const char* name, bool fullScreen) :
     glfwSetWindowFocusCallback(window, windowFocusedCallback);
     glfwSetCursorPosCallback(window, windowMouseCallback);
     activeWindow = this;
+    hoverCount = 0;
+    cursorNormal = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    cursorHover = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
 }
 
 Window::~Window() {
@@ -78,6 +81,11 @@ bool Window::shouldClose() const {
 }
 
 void Window::update() const {
+    if (hoverCount > 0) {
+        glfwSetCursor(window, cursorHover);
+    } else {
+        glfwSetCursor(window, cursorNormal);
+    }
     glfwSwapBuffers(window);
     glfwPollEvents();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

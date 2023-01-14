@@ -59,7 +59,6 @@ bool Rect::collides(Vector2 pos) {
     Vector2 rpos = ros + wP;
 
     Vector2 tr = Vector2(worldScale.x, -worldScale.y) / 2 + wP, bl = Vector2(-worldScale.x, worldScale.y) / 2 + wP;
-    std::cout << tr << " " << bl << std::endl;
 
     return (rpos.x >= bl.x && rpos.x <= tr.x) && (rpos.y >= tr.y && rpos.y <= bl.y);
 }

@@ -21,6 +21,7 @@ public:
     virtual bool collides(Vector2 pos) {return true;}
     Window* window;
 
+
     GUI_EL_ANCHOR anchor = GUI_EL_ANCHOR_TL;
     GUI_EL_DOCK dock = GUI_EL_DOCK_TL;
 
