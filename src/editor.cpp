@@ -18,6 +18,7 @@
 #include "core/gui/guiRenderer.hpp"
 #include "util/noise.hpp"
 
+
 using namespace SHOGUN;
 
 Scene* scene;
@@ -76,23 +77,24 @@ int main() {
 
     PerlinNoise pn(true);
     Shader* shader = new Shader("shaders/3dtextureshader.vert", "shaders/pbrshader.frag");
-    Material* carpetMaterial = new Material("textures/mortar-bricks", "png");
+    Material* brickMaterial = new Material("textures/mortar-bricks", "png");
     Material* rustedIronMaterial = new Material("textures/rusted-iron", "png");
     Model* model = new Model("models/cube.obj");
 
-    Mesh* mesh = new Mesh(model, shader, rustedIronMaterial);
-    mesh->id = "Cube 1";
-    mesh->name = "Cube 1";
-    mesh->setScale(Vector3(7,1,7));
-    mesh->setPosition(Vector3(-5,0,4));
-    scene->addEntity(mesh);
+    Mesh* ironMesh = new Mesh(model, shader, rustedIronMaterial);
+    ironMesh->id = "Cube 1";
+    ironMesh->name = "Cube 1";
+    ironMesh->setScale(Vector3(1,7,7));
+    ironMesh->setRotation(Vector3(90,0,0));
+    ironMesh->setPosition(Vector3(-1,0,5));
+    scene->addEntity(ironMesh);
 
-    mesh = new Mesh(model, shader, carpetMaterial);
-    mesh->id = "Cube 2";
-    mesh->name = "Cube 2";
-    mesh->setScale(Vector3(7,1,7));
-    mesh->setPosition(Vector3(5,0,5));
-    scene->addEntity(mesh);
+    Mesh* brickMesh = new Mesh(model, shader, brickMaterial);
+    brickMesh->id = "Cube 2";
+    brickMesh->name = "Cube 2";
+    brickMesh->setScale(Vector3(7,1,7));
+    brickMesh->setPosition(Vector3(3.5,0,5));
+    scene->addEntity(brickMesh);
 
     Button* button = new Button();
     button->setScale(Vector3(500, 100, 0));
@@ -102,15 +104,11 @@ int main() {
     button->baseColor = Vector3(1,0,0);
     scene->addEntity(button);
 
-    for (int x = 0; x < 2; x++) {
-        for (int y = 0; y < 2; y++) {
-            Light* light = new Light();
-            light->setPosition(Vector3(-4 + x * 8, 1, -4 + y * 8));
-            light->setColor(Vector3(1, 1, 1));
-            light->strength = 5;
-            scene->addEntity(light);
-        }
-    }
+    Light* light = new Light();
+    light->setPosition(Vector3(5, 2, 5));
+    light->setColor(Vector3(1, 1, 1));
+    light->strength = 3;
+    scene->addEntity(light);
 
     int tick = 0;
     ssf.serializeScene("src/sceneSave.ssf");
@@ -119,6 +117,9 @@ int main() {
         std::chrono::high_resolution_clock::time_point frameStart = std::chrono::high_resolution_clock::now();
 
         loop();
+
+        ironMesh->setRotation(ironMesh->getRotation() + Vector3(0.1,0,0));
+        light->setPosition(Vector3((sin(tick / 200.0f) + 1) * 2, 2, 5));
 
         glClear(GL_COLOR_BUFFER_BIT);
         rustedIronMaterial->use();

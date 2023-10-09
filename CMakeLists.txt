@@ -33,3 +33,7 @@ target_link_libraries(SHOGUN_PLAYER PRIVATE glad)
 add_subdirectory(lib/glm EXCLUDE_FROM_ALL)
 target_link_libraries(SHOGUN_EDITOR PRIVATE glm)
 target_link_libraries(SHOGUN_PLAYER PRIVATE glm)
+
+add_subdirectory(lib/freetype-2.10.0)
+target_link_libraries(SHOGUN_PLAYER PRIVATE freetype)
+target_link_libraries(SHOGUN_EDITOR PRIVATE freetype)

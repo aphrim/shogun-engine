@@ -56,7 +56,7 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
     float denom = (NdotH2 * (a2 - 1.0) + 1.0);
     denom = PI * denom * denom;
 
-    return nom / denom;
+    return nom / max(denom, 0.001);
 }
 // ----------------------------------------------------------------------------
 float GeometrySchlickGGX(float NdotV, float roughness)
@@ -67,13 +67,13 @@ float GeometrySchlickGGX(float NdotV, float roughness)
     float nom   = NdotV;
     float denom = NdotV * (1.0 - k) + k;
 
-    return nom / denom;
+    return nom / max(denom, 0.0001);
 }
 // ----------------------------------------------------------------------------
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
     float NdotV = max(dot(N, V), 0.00000001);
-    float NdotL = max(dot(N, L), 0.0);
+    float NdotL = max(dot(N, L), 0.00000001);
     float ggx2 = GeometrySchlickGGX(NdotV, roughness);
     float ggx1 = GeometrySchlickGGX(NdotL, roughness);
 
@@ -93,7 +93,7 @@ void main()
 
     vec3 albedo = pow(texture(albedoMap, TexCord).rgb, vec3(2.2)); //ToDo: Integrate color
     float metallic = texture(metallicMap, TexCord).r;
-    float roughness = texture(roughnessMap, TexCord).r;
+    float roughness = max(texture(roughnessMap, TexCord).r, 0.0001);
     float ao = texture(aoMap, TexCord).r;
 
     vec3 F0 = vec3(0.04); 
@@ -106,17 +106,17 @@ void main()
         // calculate per-light radiance
         vec3 L = normalize(pointLights[i].position - FragPos);
         vec3 H = normalize(V + L);
-        float distance    = length(pointLights[i].position - FragPos);
+        float distance    = length(pointLights[i].position - FragPos) / 2.0 + 0.00001;
         float attenuation = 1.0 / (distance * distance);
         vec3 radiance     = pointLights[i].color * attenuation * pointLights[i].strength;        
         
         // cook-torrance brdf
-        float NDF = DistributionGGX(N, H, roughness);        
+        float NDF = DistributionGGX(N, H, clamp(roughness, 0.03, 1.0));        
         float G   = GeometrySmith(N, V, L, roughness);      
-        vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       
+        vec3 F    = fresnelSchlick(max(dot(H, V), 0.0001), F0);       
 
         vec3 numerator    = NDF * G * F;
-        float denominator = 4.0 * max(dot(N, V), 0.00001) * max(dot(N, L), 0.0) + 0.0001;
+        float denominator = 4.0 * max(dot(N, V), 0.00001) * max(dot(N, L), 0.00001) + 0.0001;
         vec3 specular     = numerator / denominator;  
         
         vec3 kS = F;
@@ -125,11 +125,11 @@ void main()
         
             
         // add to outgoing radiance Lo
-        float NdotL = max(dot(N, L), 0.0);                
+        float NdotL = max(dot(N, L), 0.000001);                
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; 
     }   
   
-    vec3 ambient = vec3(0.03) * albedo * ao;
+    vec3 ambient = vec3(0.02) * albedo * ao;
     vec3 color = ambient + Lo;
 	
     //color = color / (color + vec3(1.0));

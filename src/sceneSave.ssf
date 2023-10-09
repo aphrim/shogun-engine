@@ -1,8 +1,8 @@
 Mesh 
  
-Position -5 0 4
-Rotation 0 0 0
-Scale 7 1 7
+Position -1 0 5
+Rotation 90 0 0
+Scale 1 7 7
 Color 0 0 0
 Albedo textures/rusted-iron/albedo.png
 Metallic textures/rusted-iron/metallic.png
@@ -15,7 +15,7 @@ Name Cube 1;
 ; 
 Mesh 
  
-Position 5 0 5
+Position 3.5 0 5
 Rotation 0 0 0
 Scale 7 1 7
 Color 0 0 0

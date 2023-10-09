@@ -28,6 +28,7 @@ void Mesh::render(Entity* c) {
 
     if (camera->boundShader != shader->ID) {
         shader->use();
+        shader->setVec3("viewPos", camera->getWorldPosition());
         camera->boundShader = shader->ID;
         camera->setShaderLights(shader);
     }
