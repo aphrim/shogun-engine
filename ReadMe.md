@@ -1,6 +1,16 @@
-Very major WIP for a game engine, right now it is just a poopy renderer.
+# Shogun Engine
+A basic rendering / game engine I made while bored in class during sophmore year of highschool.
 
-/lib contains glad, glfw, and glm
+## Features:
+- 2D and 3D rendering
+- Support for using framebuffers on textures
+- OBJ file loading
+- Ability to sereialize and load serialized scenes
+- Support for weird gimmicks such as multiple windows
+
+
+
+/lib contains glad, glfw, glm, and freetype
 
 /src/core is where most of the code is, and contains general purpose code for both the player and the engine
 
